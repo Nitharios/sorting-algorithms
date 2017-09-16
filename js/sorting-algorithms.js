@@ -5,9 +5,56 @@ var unsorted = [3, 6, 1, 8, 2, 4, 9, 5, 7];
 var sortingAlgorithms = (function() {
   // debugger;
   return {
+    mergeSort : mergeSort,
     quickSort : quickSort,
     selectionSort : selectionSort
   };
+
+  // left = 0; right = array.length-1;
+  function mergeSort(array, left, right) {
+    // debugger;
+    var i = left;
+    var j = right;
+    var middle;
+    // breaks down array into individual sections
+    if (i < j) {
+      middle = i + Math.floor((j - i)/2);
+
+      mergeSort(array, i, middle);
+      mergeSort(array, middle+1, j);
+    } // if base case condition met, reader will start here
+    //base case
+    if (i === middle) return array;
+
+    // sorting starts
+    var k = middle;
+    var placeHolder = null;
+
+    while (left < right) {
+      if (array[left] > array[k+1]) {
+        var temp = array[left];
+        array[left] = array[k+1];
+        array[k+1] = temp;
+
+        if (array[placeHolder] > array[left]) {
+          var tempTwo = array[placeHolder];
+          array[placeHolder] = array[left];
+          array[left] = tempTwo;
+        }
+        placeHolder = left;
+        left++;
+      } else if (array[left] < array[k+1]) {
+        placeHolder = left;
+        left++;
+      }
+
+      if (left === k+1) {
+        k++;
+      }
+    }
+
+    return array;
+  }
 
   function quickSort(array, left, right) {
     // debugger;
@@ -19,7 +66,7 @@ var sortingAlgorithms = (function() {
     while (i <= j) {
       while (array[i] < pivot) i++;
       while (array[j] > pivot) j--;
-      //if the left index is greater than the right index, a smaller number than pivot is on the right of pivot and needs to be swapped with the element at index j
+      // if the element at index i is greater than the element at index j, a smaller number than pivot is on the right of pivot and needs to be swapped with the element at index j
       if (i <= j) { 
         var temp = array[i];
         array[i] = array[j];
@@ -59,8 +106,11 @@ var sortingAlgorithms = (function() {
   }
 
 })();
-
-var result = sortingAlgorithms.quickSort(unsorted, 0, unsorted.length-1);
+var result = null;
+console.log('original array: ', unsorted);
+result = sortingAlgorithms.mergeSort(unsorted, 0, unsorted.length-1);
+console.log('merge sort: ', result);
+result = sortingAlgorithms.quickSort(unsorted, 0, unsorted.length-1);
 console.log('quick sort: ', result);
 result = sortingAlgorithms.selectionSort(unsorted);
 console.log('selection sort: ', result);
