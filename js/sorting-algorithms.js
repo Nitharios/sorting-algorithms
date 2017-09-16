@@ -1,6 +1,6 @@
 console.log('Sanity Check: Sorting Algorithms');
 
-var unsorted = [3, 6, 1, 8, 2, 4, 9, 5, 7];
+var unsorted = [3, 6, 1, 8, 2, 4, 9, 5];
 
 var sortingAlgorithms = (function() {
   // debugger;
@@ -30,6 +30,7 @@ var sortingAlgorithms = (function() {
     var k = middle;
     var placeHolder = null;
 
+    // possibly needs iterator to check and compare index elements
     while (left < right) {
       if (array[left] > array[k+1]) {
         var temp = array[left];
