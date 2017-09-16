@@ -1,50 +1,54 @@
 console.log('Sanity Check: Quick Sort');
 
-var unsorted = [5, 6, 1, 8, 2, 4, 9, 3];
+var unsorted = [3, 6, 1, 8, 2, 4, 9, 5];
 
-function quickSortStarter(array) { 
+function quickSortStarter(toSort) { 
+  // base case
+  if (toSort.length <= 1) {
+    return toSort;
+  }
 
-  lowNumber = array[0];
-  highNumber = array[array.length-1];
+  var lowIndex = 0;
+  var highIndex = toSort.length-1;
 
-  function quickSort(array, lowNumber, highNumber) {
-    // base case
-    if (array.length <= 1) {
-      return array;
-    }
+  // debugger;
+  quickSort(toSort, lowIndex, highIndex);
 
-    if (lowNumber < highNumber) {
-      var pivotIndex = partition(array, lowNumber, highNumber);
-      quickSort(array, lowNumber, pivotIndex);
-      quickSort(array, pivotIndex+1, highNumber);
+  function quickSort(toSort, lowIndex, highIndex) {
+    if (lowIndex < highIndex) {
+      var pivotIndex = partition(toSort, lowIndex, highIndex);
+      quickSort(toSort, lowIndex, pivotIndex);
+      quickSort(toSort, pivotIndex+1, highIndex);
     }
   }
 
-  function partition(array, lowNumber, highNumber) {
-    var pivot = array.indexOf(lowNumber);
-    var i = array.indexOf(lowNumber)-1;
-    var j = array.indexOf(highNumber)-1;
+  function partition(toSort, lowIndex, highIndex) {
+    var pivot = toSort[lowIndex];
+    var i = lowIndex-1;
+    var j = highIndex+1;
 
-    do {
-      i = i + 1;
-    } while (array[i] < array.indexOf(lowNumber));
+    while (true) {
+      do {
+        i = i + 1;
+      } while (toSort[i] < pivot);
 
-    do {
-      j = j - 1;
-    } while (array[j] > array.indexOf(lowNumber));
+      do {
+        j = j - 1;
+      } while (toSort[j] > pivot);
 
-    if (i >= j) {
-      return j;
+      if (i >= j) {
+        return j;
+      }
     }
 
-    var temp = array[i];
-    array[i] = array[j];
-    array[j] = temp;
+    var temp = toSort[i];
+    toSort[i] = toSort[j];
+    toSort[j] = temp;
   }
 
   // base case
   // return value?
-  return array;
+  return toSort;
 }
 
 var result = quickSortStarter(unsorted);
