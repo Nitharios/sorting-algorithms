@@ -3,37 +3,32 @@ console.log('Sanity Check: Quick Sort');
 var unsorted = [3, 6, 1, 8, 2, 4, 9, 5, 7];
 
 // debugger;
-function quickSortStarter(array) {
+function quickSort(array, left, right) {
+  // debugger;
+  var i = left;
+  var j = right;
+  var pivot = array[Math.floor((left+right)/2)]; 
 
-  return quickSort(array, 0, array.length-1);
+  while (i <= j) {
+    while (array[i] < pivot) i++;
+    while (array[j] > pivot) j--;
 
-  function quickSort(array, left, right) {
-    // debugger;
-    var i = left;
-    var j = right;
-    var pivot = array[Math.floor((left+right)/2)]; 
-
-    while (i <= j) {
-      while (array[i] < pivot) i++;
-      while (array[j] > pivot) j--;
-
-      if (i <= j) {
-        var temp = array[i];
-        array[i] = array[j];
-        array[j] = temp;
-        i++;
-        j--;
-      }
+    if (i <= j) {
+      var temp = array[i];
+      array[i] = array[j];
+      array[j] = temp;
+      i++;
+      j--;
     }
-
-    if (left < j) quickSort(array, left, j);
-    if (i < right) quickSort(array, i, right);
-
-    return array;
   }
+
+  if (left < j) quickSort(array, left, j);
+  if (i < right) quickSort(array, i, right);
+
+  return array;
 }
 
-var result = quickSortStarter(unsorted);
+var result = quickSort(unsorted, 0, unsorted.length-1);
 console.log(result);
 
 // function quickSortStarter(toSort) { 
