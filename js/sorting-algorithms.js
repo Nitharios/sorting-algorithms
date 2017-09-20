@@ -1,3 +1,5 @@
+// jshint esversion:6
+
 console.log('Sanity Check: Sorting Algorithms');
 
 var unsorted = [3, 6, 1, 8, 2, 4, 9, 5];
@@ -5,10 +7,24 @@ var unsorted = [3, 6, 1, 8, 2, 4, 9, 5];
 var sortingAlgorithms = (function() {
   // debugger;
   return {
+    insertionSort : insertionSort,
     mergeSort : mergeSort,
     quickSort : quickSort,
     selectionSort : selectionSort
   };
+ 
+  function insertionSort(array) {
+    for (let i = 1; i < array.length; i++) {
+      let j = 0;
+      let temp = array[i];
+      for (j = i-1; j >= 0 && array[j] > temp; j--) {
+        array[j+1] = array[j];
+        console.log(array);
+      }
+      array[j+1] = temp;
+    }
+    return array;
+  }
 
   // left = 0; right = array.length-1;
   function mergeSort(array, left, right) {
@@ -55,6 +71,42 @@ var sortingAlgorithms = (function() {
     }
 
     return array;
+
+  //Ed's livecode example
+
+  // function mergeSortExample(){
+  //   //base case: if (arr.length < 2) return;
+  //   if (arr.length < 2){
+  //     return arr;
+  //   }
+  //   //find the  middle
+  //   var middle = Math.floor(arr.length/2);
+
+  //   //split array in two
+  //   var left = mergeSortExample(arr.slice(0, middle));/// slice method makes a COPY///
+  //   var right = mergeSortExample(arr.slice(middle, arr.length));
+
+  //   //sort both arrays
+  //   return sort(left, right);
+
+  //   //return sorted left and right, concat
+  // }
+
+  // function sort(left, right){
+  //   var sorted = [];
+  //   while((left.length + right.length)) > 0{
+  //     if(left[0] === undefined){
+  //       sorted.push(right.shift());
+  //     }else if(right[0] === undefined){
+  //       sorted.push(left.shift());
+  //     }else if(left[0] < right[0]){
+  //       sorted.push(left.shift());
+  //     }else{
+  //       sorted.push(right.shift());
+  //     }
+  //   }
+  //   return sorted;
+  // }
   }
 
   function quickSort(array, left, right) {
@@ -109,6 +161,8 @@ var sortingAlgorithms = (function() {
 })();
 var result = null;
 console.log('original array: ', unsorted);
+result = sortingAlgorithms.insertionSort(unsorted);
+console.log('insertion sort: ', result);
 result = sortingAlgorithms.mergeSort(unsorted, 0, unsorted.length-1);
 console.log('merge sort: ', result);
 result = sortingAlgorithms.quickSort(unsorted, 0, unsorted.length-1);
